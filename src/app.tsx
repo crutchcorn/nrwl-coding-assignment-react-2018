@@ -1,49 +1,33 @@
 import * as React from "react";
 import {BackendService} from "./backend";
-import {take} from "rxjs/operators";
-import {TicketDataProvider, useTicketData} from "./context";
+import {TicketDataProvider} from "./context";
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route
+} from "react-router-dom";
+import {TicketsList} from "./tickets-list";
+import {TicketsView} from "./ticket-view";
 
 interface AppProps {
     backend: BackendService;
 }
 
-const AppBase = ({backend}: AppProps) => {
-    const {state, dispatch} = useTicketData();
-
-    const addTicket = () => {
-        dispatch({type: 'loadingAction'});
-        backend.newTicket({description: "This is a test"})
-            .pipe(take(1))
-            .toPromise()
-            .then(newTick => {
-                dispatch({type: 'addTicket', payload: newTick});
-            });
-    }
-
+const App = ({backend}: AppProps) => {
     return (
-        <div>
-            <h2>Tickets</h2>
-            {state.loading && <p aria-live='polite'>Loading...</p>}
-            {state.tickets ? (
-                <ul>
-                    {state.tickets.map(t => (
-                        <li key={t.id}>
-                            Ticket: {t.id}, {t.description}
-                        </li>
-                    ))}
-                </ul>
-            ) : (
-                <span>...</span>
-            )}
-            <button onClick={() => addTicket()}>Add ticket</button>
-        </div>
+        <TicketDataProvider backend={backend}>
+            <Router>
+                <Switch>
+                    <Route path="/:ticketId">
+                        <TicketsView backend={backend}/>
+                    </Route>
+                    <Route path="/">
+                        <TicketsList backend={backend}/>
+                    </Route>
+                </Switch>
+            </Router>
+        </TicketDataProvider>
     );
 };
-
-const App = ({backend}: AppProps) => {
-    return <TicketDataProvider backend={backend}>
-        <AppBase backend={backend}/>
-    </TicketDataProvider>
-}
 
 export default App;

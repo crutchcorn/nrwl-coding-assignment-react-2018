@@ -19,6 +19,8 @@ function reducer(state: ReducerState, action: { type: string, payload?: any }): 
             return {loading: false, tickets: [...state.tickets, action.payload]};
         case 'loadingAction':
             return {...state, loading: true};
+        case 'doneLoading':
+            return {...state, loading: false};
         default:
             throw new Error();
     }
