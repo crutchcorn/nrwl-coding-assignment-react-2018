@@ -18,6 +18,9 @@
     "noUnusedLocals": true,
     "baseUrl": "./src/",
     "paths": {
+      "~components/*": ["./components/*"],
+      "~constants/*": ["./constants/*"],
+      "~backend": ["./backend"],
       "*": ["*"]
     }
   },

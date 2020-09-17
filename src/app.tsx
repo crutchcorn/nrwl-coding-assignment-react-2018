@@ -1,13 +1,13 @@
 import * as React from "react";
-import {BackendService} from "./backend";
-import {TicketDataProvider} from "./context";
+import {BackendService} from "~backend";
+import {TicketDataProvider} from "~constants/ticket-data-context";
 import {
     BrowserRouter as Router,
     Switch,
     Route
 } from "react-router-dom";
-import {TicketsList} from "./tickets-list";
-import {TicketsView} from "./ticket-view";
+import {TicketsList} from "./views/tickets-list";
+import {TicketsView} from "./views/ticket-view";
 
 interface AppProps {
     backend: BackendService;

@@ -1,6 +1,6 @@
 import * as React from 'react';
-import {BackendService} from "./backend";
-import {useTicketData} from "./context";
+import {BackendService} from "~backend";
+import {useTicketData} from "~constants/ticket-data-context";
 import {take} from "rxjs/operators";
 import {
     Link

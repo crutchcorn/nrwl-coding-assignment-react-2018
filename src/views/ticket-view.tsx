@@ -1,8 +1,8 @@
 import * as React from 'react';
-import {BackendService, Ticket, User} from "./backend";
-import {useTicketData} from "./context";
+import {BackendService, Ticket, User} from "~backend";
+import {useTicketData} from "~constants/ticket-data-context";
 import {useParams} from 'react-router-dom';
-import {Snackbar} from "./components/snackbar";
+import {Snackbar} from "~components/snackbar";
 
 interface TicketsViewProps {
     backend: BackendService;
