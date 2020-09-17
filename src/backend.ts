@@ -1,3 +1,14 @@
+/**
+ * I've had to make some minor code changes to fix TypeScript typings, but wanted to keep the API shape/behavior consistent.
+ * The way I thought about it was "there are some APIs that we're not able to change for various reasons".
+ *
+ * If I were to change the way the API itself functions, I'd probably make "tickets" return the new set of tickets,
+ * so that I could retrieve the new set of tickets from the array instead of just the first set of array
+ * (this behavior is pretty clearly a bug, but I'm able to work around it for now. If I were to fix it, I'd use a Subject
+ * of some kind in order to run a ".next" after creating a ticket and update the subscription
+ */
+
+
 import { Observable, of, throwError } from 'rxjs';
 import { delay, tap } from 'rxjs/operators';
 
@@ -14,7 +25,7 @@ export type User = {
 export type Ticket = {
   id: number;
   description: string;
-  assigneeId: number;
+  assigneeId: number | null;
   completed: boolean;
 };
 
@@ -44,16 +55,16 @@ export class BackendService {
 
   constructor() { }
 
-  private findTicketById = id =>
+  private findTicketById = (id: string | number) =>
     this.storedTickets.find(ticket => ticket.id === +id);
-  private findUserById = id => this.storedUsers.find(user => user.id === +id);
+  private findUserById = (id: string | number) => this.storedUsers.find(user => user.id === +id);
 
   tickets() {
     return of(this.storedTickets).pipe(delay(randomDelay()));
   }
 
   ticket(id: number): Observable<Ticket> {
-    return of(this.findTicketById(id)).pipe(delay(randomDelay()));
+    return of(this.findTicketById(id)!).pipe(delay(randomDelay()));
   }
 
   users() {
