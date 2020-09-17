@@ -49,7 +49,7 @@ export class BackendService {
     }
   ];
 
-  storedUsers: User[] = [{ id: 111, name: 'Victor' }];
+  storedUsers: User[] = [{ id: 111, name: 'Victor' }, { id: 222, name: 'Corbin'}];
 
   lastId = 1;
 
