@@ -1,5 +1,5 @@
 import * as React from "react";
-import {BackendService, Ticket} from "../backend";
+import {BackendService, Ticket} from "~backend";
 import {take} from "rxjs/operators";
 import {useReducer} from "react";
 

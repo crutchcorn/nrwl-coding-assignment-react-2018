@@ -16,7 +16,14 @@ export const TicketsList = ({backend}: TicketsListProps) => {
 
     const [newTicket, setTicket] = React.useState('');
 
+    const [search, setSearch] = React.useState('');
+
     const [err, setErr] = React.useState('');
+
+    const filteredTickets = React.useMemo(() => {
+        if (!search) return state.tickets;
+        return state.tickets.filter(stateTick => stateTick.description.includes(search));
+    }, [state.tickets, search])
 
     const addTicket = () => {
         // Ideally, if I had time, we'd do some data validation here
@@ -39,9 +46,14 @@ export const TicketsList = ({backend}: TicketsListProps) => {
             <div className="ticketsListContainer">
                 {state.loading && <p className="subtitle" aria-live='polite'>Loading...</p>}
                 {state.tickets && <>
-                    <h1 className="subtitle">Tickets ({state.tickets.length})</h1>
+                    <label className="textLabel">
+                        <span className="secondary">Ticket search</span>
+                        <input className="textInp"onChange={e => setSearch(e.target.value)} value={search}/>
+                    </label>
+
+                <h1 className="subtitle">Tickets ({state.tickets.length})</h1>
                 <ul className="ticketList">
-                    {state.tickets.map(t => (
+                    {filteredTickets.map(t => (
                         <li key={t.id}>
                             <Link to={`/${t.id}`} className="body">
                                 {t.description}
