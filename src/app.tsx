@@ -1,6 +1,6 @@
 import * as React from "react";
-import {BackendService} from "~backend";
-import {TicketDataProvider} from "~constants/ticket-data-context";
+import {BackendService} from "./backend";
+import {TicketDataProvider} from "./constants/ticket-data-context";
 import {
     BrowserRouter as Router,
     Switch,

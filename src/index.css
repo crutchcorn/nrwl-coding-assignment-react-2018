@@ -1,0 +1,61 @@
+:root {
+  --bodyColor: #1F4741;
+}
+
+h1, p, body, button {
+  font-family: Manrope, Lato, sans-serif;
+  color: var(--bodyColor);
+}
+
+.mainContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  overflow: hidden;
+  flex-grow: 1;
+  flex-shrink: 0;
+  border: 2px solid rgba(0, 128, 106, 0.32);
+  border-radius: 24px;
+}
+
+.btnBase {
+  border: 1px solid rgba(0, 128, 106, 0.32);
+  box-sizing: border-box;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.24);
+  border-radius: 8px;
+  background: #FFFFFF;
+  cursor: pointer;
+  padding: 12px 20px;
+}
+
+.btnBaseHover, .btnBase {
+  transition: 150ms background ease-in-out;
+}
+
+.btnBase:not(.noHover):hover, .btnBaseHover:hover {
+  background: rgba(0, 128, 106, 0.12);
+}
+
+.subtitle {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 28px;
+  line-height: 40px;
+}
+
+.secondary {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 40px;
+}
+
+.body {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24px;
+}

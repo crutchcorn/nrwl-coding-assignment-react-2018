@@ -1,0 +1,37 @@
+/* Need both selectors to avoid !important */
+.mainContainer.viewContainer {
+    padding: 2rem;
+    flex-direction: column;
+}
+
+.ticketDesc {
+    padding-left: 1rem;
+    position: relative;
+}
+
+.ticketDesc:before {
+    content: ' ';
+    width: 2px;
+    background-color: var(--bodyColor);
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.userSelectLabel {
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.userSelectLabel span {
+    opacity: 0.8;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.userSelect {
+    padding: 1rem;
+    width: 100%;
+    border: 1px solid var(--bodyColor);
+}

@@ -8,7 +8,6 @@
  * of some kind in order to run a ".next" after creating a ticket and update the subscription
  */
 
-
 import { Observable, of, throwError } from 'rxjs';
 import { delay, tap } from 'rxjs/operators';
 

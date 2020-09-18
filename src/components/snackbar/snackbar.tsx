@@ -15,7 +15,7 @@ export const Snackbar = ({message, show, setShow}: SnackbarProps) => {
         }, 3500)
 
         return () => clearTimeout(timeout);
-    }, [show]);
+    }, [setShow, show]);
 
     return !show ? null :
         <p className="successSnackbar" aria-live="assertive">

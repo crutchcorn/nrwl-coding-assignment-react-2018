@@ -1,8 +1,8 @@
 import * as React from 'react';
-import {BackendService, Ticket, User} from "~backend";
-import {useTicketData} from "~constants/ticket-data-context";
+import {BackendService, Ticket, User} from "../../backend";
+import {useTicketData} from "../../constants/ticket-data-context";
 import {useParams} from 'react-router-dom';
-import {Snackbar} from "~components/snackbar";
+import {Snackbar} from "../../components/snackbar";
 import './ticket-view.css';
 
 interface TicketsViewProps {
@@ -49,7 +49,7 @@ export const TicketsView = ({backend}: TicketsViewProps) => {
         Promise.all([getUsers, getTicket])
             .then(() => dispatch({type: 'doneLoading'}))
             .catch(() => dispatch({type: 'doneLoading'}))
-    }, [err, state.tickets, ticketId, selectedTicket])
+    }, [err, state.tickets, ticketId, selectedTicket, dispatch, backend])
 
     React.useEffect(() => {
         if (err || !selectedTicket) return;
@@ -68,7 +68,7 @@ export const TicketsView = ({backend}: TicketsViewProps) => {
         }
 
         setLoadingUser(false);
-    }, [selectedTicket, err]);
+    }, [selectedTicket, err, backend]);
 
     const onUserSelect = (id: string) => {
         // This is making the assumption that there is no server-side pagination of any kind. If there were, we'd likely
