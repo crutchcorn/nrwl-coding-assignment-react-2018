@@ -42,36 +42,51 @@ export const TicketsList = ({backend}: TicketsListProps) => {
     if (err.length) return <p>{err}</p>
 
     return (
-        <div className="mainContainer">
-            <div className="ticketsListContainer">
-                {state.loading && <p className="subtitle" aria-live='polite'>Loading...</p>}
-                {state.tickets && <>
-                    <label className="textLabel">
-                        <span className="secondary">Ticket search</span>
-                        <input className="textInp"onChange={e => setSearch(e.target.value)} value={search}/>
-                    </label>
+      <div className="mainContainer">
+        <div className="ticketsListContainer">
+          {state.loading && (
+            <p className="subtitle" aria-live="polite">
+              Loading...
+            </p>
+          )}
+          {state.tickets && (
+            <>
+              <label className="textLabel">
+                <span className="secondary">Ticket search</span>
+                <input
+                  className="textInp"
+                  onChange={(e) => setSearch(e.target.value)}
+                  value={search}
+                />
+              </label>
 
-                <h1 className="subtitle">Tickets ({state.tickets.length})</h1>
-                <ul className="ticketList">
-                    {filteredTickets.map(t => (
-                        <li key={t.id}>
-                            <Link to={`/${t.id}`} className="body">
-                                {t.description}
-                            </Link>
-                        </li>
-                    ))}
-                </ul>
-                </>
-                }
-            </div>
-            <div className="createTicketView">
-                <h2 className="subtitle">Add new ticket:</h2>
-                <label className="textLabel">
-                    <span className="secondary">Ticket description</span>
-                    <input className="textInp"onChange={e => setTicket(e.target.value)} value={newTicket}/>
-                </label>
-                <button className="btnBase body" onClick={() => addTicket()}>Add ticket</button>
-            </div>
+              <h1 className="subtitle">Tickets ({filteredTickets.length})</h1>
+              <ul className="ticketList">
+                {filteredTickets.map((t) => (
+                  <li key={t.id}>
+                    <Link to={`/${t.id}`} className="body">
+                      {t.description}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
         </div>
+        <div className="createTicketView">
+          <h2 className="subtitle">Add new ticket:</h2>
+          <label className="textLabel">
+            <span className="secondary">Ticket description</span>
+            <input
+              className="textInp"
+              onChange={(e) => setTicket(e.target.value)}
+              value={newTicket}
+            />
+          </label>
+          <button className="btnBase body" onClick={() => addTicket()}>
+            Add ticket
+          </button>
+        </div>
+      </div>
     );
 }
