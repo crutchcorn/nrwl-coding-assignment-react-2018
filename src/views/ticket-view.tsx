@@ -3,6 +3,7 @@ import {BackendService, Ticket, User} from "~backend";
 import {useTicketData} from "~constants/ticket-data-context";
 import {useParams} from 'react-router-dom';
 import {Snackbar} from "~components/snackbar";
+import './ticket-view.css';
 
 interface TicketsViewProps {
     backend: BackendService;
@@ -92,17 +93,25 @@ export const TicketsView = ({backend}: TicketsViewProps) => {
     const loading = loadingUser || state.loading;
 
     return (
-        <div>
-            {loading && <p>Loading...</p>}
-            {selectedTicket && <p>{selectedTicket.description}</p>}
-            {selectedUser && <p>Assigned to {selectedUser.name}</p>}
-            {users && <select placeholder={"Select a user to assign to the ticket"} value={selectedUser?.id || ""} onChange={event => onUserSelect(event.target.value)}>
-                <option value={""}> </option>
-                {
-                    users.map(user => <option key={user.id} value={user.id}>{user.name}</option>)
-                }
-            </select>}
-            <Snackbar show={!!snackbarMessage.length} setShow={v => v ? null : setSnackMsg('')} message={snackbarMessage}/>
+        <div className="mainContainer viewContainer">
+            <h1 className="subtitle">Ticket Details</h1>
+            {loading && <p className="secondary">Loading...</p>}
+            {selectedTicket && <p className="body ticketDesc">{selectedTicket.description}</p>}
+            {selectedUser && <p className="body">Assigned to {selectedUser.name}</p>}
+            {users &&
+                <label className="userSelectLabel">
+                    <span>Select a user to assign the ticket to</span>
+                    <select className="userSelect" placeholder={"Select a user to assign to the ticket"}
+                            value={selectedUser?.id || ""} onChange={event => onUserSelect(event.target.value)}>
+                        <option value={""}></option>
+                        {
+                            users.map(user => <option key={user.id} value={user.id}>{user.name}</option>)
+                        }
+                    </select>
+                </label>
+            }
+            <Snackbar show={!!snackbarMessage.length} setShow={v => v ? null : setSnackMsg('')}
+                      message={snackbarMessage}/>
         </div>
     );
 }
