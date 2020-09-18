@@ -7,7 +7,7 @@ import {
     Route
 } from "react-router-dom";
 import {TicketsList} from "./views/tickets-list";
-import {TicketsView} from "./views/ticket-view";
+import {TicketView} from "./views/ticket-view";
 
 interface AppProps {
     backend: BackendService;
@@ -19,7 +19,7 @@ const App = ({backend}: AppProps) => {
             <Router>
                 <Switch>
                     <Route path="/:ticketId">
-                        <TicketsView backend={backend}/>
+                        <TicketView backend={backend}/>
                     </Route>
                     <Route path="/">
                         <TicketsList backend={backend}/>

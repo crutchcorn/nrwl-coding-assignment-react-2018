@@ -5,11 +5,11 @@ import {useParams} from 'react-router-dom';
 import {Snackbar} from "../../components/snackbar";
 import './ticket-view.css';
 
-interface TicketsViewProps {
+interface TicketViewProps {
     backend: BackendService;
 }
 
-export const TicketsView = ({backend}: TicketsViewProps) => {
+export const TicketView = ({backend}: TicketViewProps) => {
     const {state, dispatch} = useTicketData();
 
     const [selectedTicket, setTicket] = React.useState<Ticket | null>(null);
@@ -101,7 +101,7 @@ export const TicketsView = ({backend}: TicketsViewProps) => {
             {users &&
                 <label className="userSelectLabel">
                     <span>Select a user to assign the ticket to</span>
-                    <select className="userSelect" placeholder={"Select a user to assign to the ticket"}
+                    <select className="userSelect"
                             value={selectedUser?.id || ""} onChange={event => onUserSelect(event.target.value)}>
                         <option value={""}></option>
                         {

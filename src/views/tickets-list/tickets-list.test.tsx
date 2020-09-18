@@ -20,3 +20,13 @@ test("create new ticket", async () => {
   fireEvent.click(getByText("Add ticket"));
   await wait(() => expect(getByText("Testing this now")).toBeInTheDocument());
 });
+
+
+test("filter on ticket", async () => {
+  const backend = new BackendService();
+  const { getByText, getByLabelText, queryByText } = renderHarness(backend, <TicketsList backend={backend} />);
+  const textInput = getByLabelText("Ticket search");
+  fireEvent.change(textInput, {target: {value: 'monitor'}});
+  await wait(() => expect(getByText("Install a monitor arm")).toBeInTheDocument());
+  await wait(() => expect(queryByText("Move the desk to the new location")).not.toBeInTheDocument());
+});
