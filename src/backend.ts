@@ -9,7 +9,7 @@
  */
 
 import { Observable, of, throwError } from 'rxjs';
-import { delay, tap } from 'rxjs/operators';
+import {delay, switchMap, tap} from 'rxjs/operators';
 
 /**
  * This service acts as a mock back-end.
@@ -30,6 +30,14 @@ export type Ticket = {
 
 function randomDelay() {
   return Math.random() * 4000;
+}
+
+function returnRandomError(val: any) {
+  // return of(val);
+  // Hello, previous me!
+  const shouldErr = Math.random() > 0.5;
+  if (shouldErr) return throwError('It was the worst of times, it was the best of times');
+  return of(val);
 }
 
 export class BackendService {
@@ -59,7 +67,7 @@ export class BackendService {
   private findUserById = (id: string | number) => this.storedUsers.find(user => user.id === +id);
 
   tickets() {
-    return of(this.storedTickets).pipe(delay(randomDelay()));
+    return of(this.storedTickets).pipe(delay(randomDelay()), switchMap(val => returnRandomError(val)));
   }
 
   ticket(id: number): Observable<Ticket> {

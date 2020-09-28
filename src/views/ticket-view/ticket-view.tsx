@@ -19,6 +19,7 @@ export const TicketView = ({backend}: TicketViewProps) => {
 
     // I decided that this was an instance of local loading instead of a more global,
     // state-wide loading procedure. To provide a good experience to the user, I decided to leave this here
+    const [loadingTickets, setLoadingTickets] = React.useState(true);
     const [loadingUser, setLoadingUser] = React.useState(true);
 
     // Ideally, I'd move all errors to use the snackbar of some kind and render a shell around
@@ -29,7 +30,7 @@ export const TicketView = ({backend}: TicketViewProps) => {
 
     React.useEffect(() => {
         if (!ticketId || err || selectedTicket || !state.tickets) return;
-        dispatch({type: 'loadingAction'})
+        setLoadingTickets(true)
 
         const getUsers = backend.users().toPromise()
             .then(setUsers)
@@ -47,8 +48,8 @@ export const TicketView = ({backend}: TicketViewProps) => {
             });
 
         Promise.all([getUsers, getTicket])
-            .then(() => dispatch({type: 'doneLoading'}))
-            .catch(() => dispatch({type: 'doneLoading'}))
+            .then(() => setLoadingTickets(false))
+            .catch(() => setLoadingTickets(false))
     }, [err, state.tickets, ticketId, selectedTicket, dispatch, backend])
 
     React.useEffect(() => {
@@ -90,7 +91,7 @@ export const TicketView = ({backend}: TicketViewProps) => {
 
     if (err.length) return <p>{err}</p>
 
-    const loading = loadingUser || state.loading;
+    const loading = loadingUser || loadingTickets;
 
     return (
         <div className="mainContainer viewContainer">

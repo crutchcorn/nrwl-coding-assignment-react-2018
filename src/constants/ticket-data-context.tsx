@@ -7,20 +7,53 @@ interface ContextProviderProps {
     backend: BackendService;
 }
 
-const initialState = {loading: true as boolean, tickets: [] as Ticket[]};
+export enum StateEnum {
+    LOADING,
+    ERROR,
+    SUCCESS
+}
 
-type ReducerState = typeof initialState;
+interface StateError {
+    state: StateEnum.ERROR,
+    tickets: null;
+    stateMessage: string;
+}
 
-function reducer(state: ReducerState, action: { type: string, payload?: any }): ReducerState {
+interface StateLoading {
+    state: StateEnum.LOADING;
+    // Will be `null` if dispatched initially, will be [] if dispatched with "addTicket"
+    tickets: Ticket[] | null;
+    stateMessage: '';
+}
+
+interface StateSuccess {
+    state: StateEnum.SUCCESS;
+    tickets: Ticket[];
+    stateMessage: '';
+}
+
+type State = StateError | StateLoading | StateSuccess;
+
+const initialState: State = {state: StateEnum.LOADING, stateMessage: '', tickets: null};
+
+type ReducerState = State;
+
+type ReducerEnum = 'initialDataLoad' |
+    'addTicket' |
+    'loadingAction' |
+    'doneLoading' |
+    'errorInitial';
+
+function reducer(state: ReducerState, action: { type: ReducerEnum, payload?: any }): ReducerState {
     switch (action.type) {
         case 'initialDataLoad':
-            return {loading: false, tickets: action.payload};
+            return {stateMessage: '', state: StateEnum.SUCCESS, tickets: action.payload};
         case 'addTicket':
-            return {loading: false, tickets: [...state.tickets, action.payload]};
+            return {stateMessage: '', state: StateEnum.SUCCESS, tickets: [...(state.tickets || []), action.payload]};
         case 'loadingAction':
-            return {...state, loading: true};
-        case 'doneLoading':
-            return {...state, loading: false};
+            return {...state, stateMessage: '', state: StateEnum.LOADING};
+        case 'errorInitial':
+            return {state: StateEnum.ERROR, stateMessage: action.payload, tickets: null}
         default:
             throw new Error();
     }
@@ -39,6 +72,8 @@ export const useTickets = ({backend}: ContextProviderProps) => {
                  * fixing this upstream
                  */
                 dispatch({type: 'initialDataLoad', payload: [...ts]});
+            }, err => {
+                dispatch({type: 'errorInitial', payload: err.message || err})
             });
     }, [backend]);
 
